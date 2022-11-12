@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { MainScreen } from "./src/screens/MainScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { PostScreen } from "./src/screens/PostScreen";
+import Navigation from "./src/navigation/Navigation";
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -35,32 +36,6 @@ export default function App() {
   if (!isReady) {
     return null;
   }
-  /// NAVY
-  const Stack = createStackNavigator();
-  function MyStack() {
-    return (
-      <Stack.Navigator initialRouteName="MainScreen">
-        <Stack.Screen
-          name="MainScreen"
-          component={MainScreen}
-          options={{
-            title: "MainScreen of this app",
-          }}
-        />
-        <Stack.Screen
-          name="PostScreen"
-          component={PostScreen}
-          options={{
-            title: "Some postScreen",
-          }}
-        />
-      </Stack.Navigator>
-    );
-  }
 
-  return (
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
-  );
+  return <Navigation />;
 }
