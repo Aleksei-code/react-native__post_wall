@@ -15,6 +15,8 @@ import { THEME } from "../theme";
 
 export const PostScreen = ({ route, navigation }) => {
   const { date, postId } = route.params; //react native 6
+  const post = DATA.find((p) => p.id === postId);
+  const iconName = post.booked === true ? "ios-star" : "ios-star-outline";
 
   const removeHandler = () => {
     Alert.alert("Delete Post", "Are you sure you want to delete this post?", [
@@ -31,13 +33,20 @@ export const PostScreen = ({ route, navigation }) => {
     ]);
   };
 
-  const post = DATA.find((p) => p.id === postId);
-
   useEffect(() => {
     navigation.setOptions({
       title: "Post from " + new Date(date).toLocaleDateString(),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+          <Item
+            title="IconPhoto"
+            iconName={iconName}
+            onPress={() => console.log("pressed photo")}
+          />
+        </HeaderButtons>
+      ),
     }); //react native 6
-  });
+  }, []);
 
   return (
     <ScrollView>
