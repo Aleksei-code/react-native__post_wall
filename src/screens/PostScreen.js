@@ -14,7 +14,7 @@ import { DATA } from "../data";
 import { THEME } from "../theme";
 
 export const PostScreen = ({ route, navigation }) => {
-  const { date, postId } = route.params; //react native 6
+  const { date, postId } = route.params; //react native 0.6
   const post = DATA.find((p) => p.id === postId);
   const iconName = post.booked === true ? "ios-star" : "ios-star-outline";
 
@@ -41,11 +41,11 @@ export const PostScreen = ({ route, navigation }) => {
           <Item
             title="IconPhoto"
             iconName={iconName}
-            onPress={() => console.log("pressed photo")}
+            onPress={() => console.log("pressed icon")}
           />
         </HeaderButtons>
       ),
-    }); //react native 6
+    });
   }, []);
 
   return (

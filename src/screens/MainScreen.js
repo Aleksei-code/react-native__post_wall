@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { FlatList } from "react-native-gesture-handler";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
-import { Post } from "../components/Post";
 import { DATA } from "../data";
+import { PostList } from "../components/PostList";
+import { CreateScreen } from "./CreateScreen";
 
 export const MainScreen = ({ navigation }) => {
   const openPostHandler = (post) => {
     navigation.push("PostScreen", {
       postId: post.id,
       date: post.date,
-    }); // react-native 6
+    });
   };
   useEffect(() => {
     navigation.setOptions({
@@ -21,7 +20,7 @@ export const MainScreen = ({ navigation }) => {
           <Item
             title="Toggle Drawer"
             iconName="ios-menu"
-            onPress={() => console.log("Pressed")}
+            onPress={() => navigation.toggleDrawer()}
           />
         </HeaderButtons>
       ),
@@ -30,26 +29,12 @@ export const MainScreen = ({ navigation }) => {
           <Item
             title="Take photo"
             iconName="md-camera"
-            onPress={() => console.log("pressed photo")}
+            onPress={() => navigation.navigate("Create")}
           />
         </HeaderButtons>
       ),
-    }); //react native 6
+    });
   }, []);
 
-  return (
-    <View style={styles.wrapper}>
-      <FlatList
-        data={DATA}
-        keyExtractor={(post) => post.id.toString()}
-        renderItem={({ item }) => <Post post={item} onOpen={openPostHandler} />}
-      />
-    </View>
-  );
+  return <PostList data={DATA} onOpen={openPostHandler} />;
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    padding: 10,
-  },
-});
