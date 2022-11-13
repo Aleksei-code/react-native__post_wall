@@ -8,14 +8,14 @@ import { DATA } from "../data";
 
 export const MainScreen = ({ navigation }) => {
   const openPostHandler = (post) => {
-    navigation.push("Post", {
+    navigation.push("PostScreen", {
       postId: post.id,
       date: post.date,
     }); // react-native 6
   };
   useEffect(() => {
     navigation.setOptions({
-      title: "MainnPagege",
+      title: "The Main Page",
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
           <Item
