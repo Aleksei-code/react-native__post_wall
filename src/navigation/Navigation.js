@@ -62,7 +62,7 @@ function Booked() {
         name="BookedScreen"
         component={BookedScreen}
         options={{
-          title: "MainScreen of this app",
+          title: "",
         }}
       />
       <BookedNavigator.Screen
@@ -88,7 +88,7 @@ export default function Navigation() {
             if (route.name === "Posts") {
               iconName = focused ? "ios-albums" : "ios-albums";
             } else if (route.name === "Booked") {
-              iconName = focused ? "ios-list" : "ios-list-outline";
+              iconName = focused ? "ios-star" : "ios-star";
             }
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
