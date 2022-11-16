@@ -3,6 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { bootstrap } from "./src/bootstrap";
 import Navigation from "./src/navigation/Navigation";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store from "./src/store/index";
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -31,5 +33,9 @@ export default function App() {
     return null;
   }
 
-  return <Navigation />;
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
 }

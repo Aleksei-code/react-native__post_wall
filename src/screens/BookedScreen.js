@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { DATA } from "../data";
 import { PostList } from "../components/PostList";
 import { Item } from "react-navigation-header-buttons";
 import { HeaderButtons } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
+import { useSelector } from "react-redux";
 
 export const BookedScreen = ({ navigation }) => {
+  let DATA = useSelector((state) => state.main.data); //receive
+
   useEffect(() => {
     navigation.setOptions(
       {

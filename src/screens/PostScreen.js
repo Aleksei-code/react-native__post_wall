@@ -10,10 +10,14 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
-import { DATA } from "../data";
 import { THEME } from "../theme";
+import { useDispatch, useSelector } from "react-redux";
+import { addToFavorites } from "../store/mainSlice";
 
 export const PostScreen = ({ route, navigation }) => {
+  let DATA = useSelector((state) => state.main.data); //receive
+  const dispatch = useDispatch();
+
   const { date, postId } = route.params; //react native 0.6
   const post = DATA.find((p) => p.id === postId);
   const iconName = post.booked === true ? "ios-star" : "ios-star-outline";
@@ -41,12 +45,12 @@ export const PostScreen = ({ route, navigation }) => {
           <Item
             title="IconPhoto"
             iconName={iconName}
-            onPress={() => console.log("pressed icon")}
+            onPress={() => dispatch(addToFavorites(postId))}
           />
         </HeaderButtons>
       ),
     });
-  }, []);
+  }, [DATA]);
 
   return (
     <ScrollView>
