@@ -54,7 +54,10 @@ export const mainSlice = createSlice({
       state.data = data;
     },
     createPost: (state, payload) => {
-      console.log("Post CREATION");
+      console.log(payload.payload);
+      let data;
+      data = state.data;
+      data.push(payload.payload);
     },
   },
 });
