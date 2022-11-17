@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { HeaderButtons } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { Item } from "react-navigation-header-buttons";
+import { useDispatch } from "react-redux";
+import { createPost } from "../store/mainSlice";
 
 export const CreateScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     navigation.setOptions({
       title: "Create post",

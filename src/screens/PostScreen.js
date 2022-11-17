@@ -13,13 +13,29 @@ import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { THEME } from "../theme";
 import { useDispatch, useSelector } from "react-redux";
 import { addToFavorites } from "../store/mainSlice";
+import { deletePost } from "../store/mainSlice";
 
 export const PostScreen = ({ route, navigation }) => {
   let DATA = useSelector((state) => state.main.data); //receive
   const dispatch = useDispatch();
 
   const { date, postId } = route.params; //react native 0.6
-  const post = DATA.find((p) => p.id === postId);
+
+  let post;
+  (function () {
+    const dataSearch = () => {
+      return DATA.find((p) => p.id === postId);
+    };
+    if (!dataSearch()) {
+      return (post = {});
+    } else {
+      post = dataSearch();
+    }
+  })();
+
+  if (!post) {
+    navigation.popToTop();
+  }
   const iconName = post.booked === true ? "ios-star" : "ios-star-outline";
 
   const removeHandler = () => {
@@ -32,7 +48,10 @@ export const PostScreen = ({ route, navigation }) => {
       {
         text: "Delete",
         style: "destructive",
-        onPress: () => console.log("OK Pressed"),
+        onPress: () => {
+          navigation.popToTop();
+          dispatch(deletePost(postId));
+        },
       },
     ]);
   };

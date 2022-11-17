@@ -5,6 +5,7 @@ import { PostList } from "../components/PostList";
 import { CreateScreen } from "./CreateScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { initialState } from "../store/mainSlice";
+import { View, Text, StyleSheet } from "react-native";
 
 export const MainScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -47,3 +48,14 @@ export const MainScreen = ({ navigation }) => {
 
   return <PostList data={DATA} onOpen={openPostHandler} />;
 };
+
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontFamily: "inter-regular",
+  },
+});

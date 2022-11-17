@@ -48,10 +48,19 @@ export const mainSlice = createSlice({
         return post;
       });
     },
+    deletePost: (state, payload) => {
+      let data;
+      data = state.data.filter((post) => post.id !== payload.payload);
+      state.data = data;
+    },
+    createPost: (state, payload) => {
+      console.log("Post CREATION");
+    },
   },
 });
 
-export const { initialState, addToFavorites } = mainSlice.actions;
+export const { initialState, addToFavorites, deletePost, createPost } =
+  mainSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
