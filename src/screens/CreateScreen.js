@@ -1,5 +1,13 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Image, Button } from "react-native";
+import React, { useEffect, useReducer, useState, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  Button,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { HeaderButtons } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { Item } from "react-navigation-header-buttons";
@@ -7,19 +15,18 @@ import { useDispatch } from "react-redux";
 import { createPost } from "../store/mainSlice";
 import { ScrollView } from "react-native-gesture-handler";
 import { THEME } from "../theme";
+import { PhotoPicker } from "../components/photoPicker";
 
 export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [newPostText, setNewPostText] = useState("");
-
-  const img =
-    "https://cdn.londonandpartners.com/visit/general-london/areas/river/76709-640x360-houses-of-parliament-and-london-eye-on-thames-from-above-640.jpg";
+  const [imgRef, imgRefChange] = useState();
 
   const postCreationHandler = () => {
     const post = {
       id: new Date().toJSON(),
       text: newPostText,
-      img: img,
+      img: imgRef,
       date: new Date().toJSON(),
     };
     dispatch(createPost(post));
@@ -51,30 +58,32 @@ export const CreateScreen = ({ navigation }) => {
     });
   }, []);
 
+  const photoPickerHandler = (uri) => {
+    imgRefChange(uri);
+  };
+
   return (
     <ScrollView>
-      <View style={styles.center}>
-        <Text style={styles.text}>Create new post</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setNewPostText}
-          value={newPostText}
-          placeholder="Type in text of your post"
-          multiline={true}
-          autoCorrect={false}
-        ></TextInput>
-        <Image
-          style={styles.image}
-          source={{
-            uri: img,
-          }}
-        ></Image>
-        <Button
-          style={styles.button}
-          title="Create new post"
-          onPress={() => postCreationHandler()}
-        />
-      </View>
+      <TouchableWithoutFeedback>
+        <View style={styles.center}>
+          <Text style={styles.text}>Create new post</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={setNewPostText}
+            value={newPostText}
+            placeholder="Type in text of your post"
+            multiline={true}
+            autoCorrect={false}
+          ></TextInput>
+          <PhotoPicker onPick={photoPickerHandler} />
+          <Button
+            style={styles.button}
+            title="Create new post"
+            onPress={() => postCreationHandler()}
+            disabled={!newPostText || !imgRef}
+          />
+        </View>
+      </TouchableWithoutFeedback>
     </ScrollView>
   );
 };
