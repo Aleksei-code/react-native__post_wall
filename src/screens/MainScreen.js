@@ -15,7 +15,7 @@ export const MainScreen = ({ navigation }) => {
   }, []);
 
   let DATA = useSelector((state) => state.main.data); //receive
-
+  console.log(DATA);
   const openPostHandler = (post) => {
     navigation.push("PostScreen", {
       postId: post.id,
