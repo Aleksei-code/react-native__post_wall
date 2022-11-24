@@ -6,7 +6,7 @@ import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { useSelector } from "react-redux";
 
 export const BookedScreen = ({ navigation }) => {
-  let DATA = useSelector((state) => state.main.data); //receive
+  const DATA = useSelector((state) => state.post.allPosts);
 
   useEffect(() => {
     navigation.setOptions(

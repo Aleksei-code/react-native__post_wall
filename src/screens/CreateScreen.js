@@ -1,10 +1,9 @@
-import React, { useEffect, useReducer, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  Image,
   Button,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -12,24 +11,25 @@ import { HeaderButtons } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { Item } from "react-navigation-header-buttons";
 import { useDispatch } from "react-redux";
-import { createPost } from "../store/mainSlice";
 import { ScrollView } from "react-native-gesture-handler";
 import { THEME } from "../theme";
 import { PhotoPicker } from "../components/photoPicker";
+import { addPost } from "../store/actions/post";
 
 export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [newPostText, setNewPostText] = useState("");
-  const [imgRef, imgRefChange] = useState();
+  const imgRef = useRef();
 
   const postCreationHandler = () => {
     const post = {
       id: new Date().toJSON(),
       text: newPostText,
-      img: imgRef,
+      img: imgRef.current,
       date: new Date().toJSON(),
     };
-    dispatch(createPost(post));
+    console.log(post);
+    dispatch(addPost(post));
     setNewPostText("");
     navigation.navigate("MainScreen");
   };
@@ -59,7 +59,7 @@ export const CreateScreen = ({ navigation }) => {
   }, []);
 
   const photoPickerHandler = (uri) => {
-    imgRefChange(uri);
+    imgRef.current = uri;
   };
 
   return (

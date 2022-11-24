@@ -12,11 +12,10 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { THEME } from "../theme";
 import { useDispatch, useSelector } from "react-redux";
-import { addToFavorites } from "../store/mainSlice";
-import { deletePost } from "../store/mainSlice";
+import { toogleBooked, removePost } from "../store/actions/post";
 
 export const PostScreen = ({ route, navigation }) => {
-  let DATA = useSelector((state) => state.main.data); //receive
+  const DATA = useSelector((state) => state.post.allPosts);
   const dispatch = useDispatch();
 
   const { date, postId } = route.params; //react native 0.6
@@ -50,7 +49,7 @@ export const PostScreen = ({ route, navigation }) => {
         style: "destructive",
         onPress: () => {
           navigation.popToTop();
-          dispatch(deletePost(postId));
+          dispatch(removePost(postId));
         },
       },
     ]);
@@ -64,7 +63,7 @@ export const PostScreen = ({ route, navigation }) => {
           <Item
             title="IconPhoto"
             iconName={iconName}
-            onPress={() => dispatch(addToFavorites(postId))}
+            onPress={() => dispatch(toogleBooked(post))}
           />
         </HeaderButtons>
       ),

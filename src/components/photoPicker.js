@@ -7,7 +7,7 @@ export const PhotoPicker = ({ onPick }) => {
 
   const takePhoto = async () => {
     const img = await ImagePicker.launchCameraAsync({
-      quality: 0.9,
+      quality: 1,
       allowsEditing: false,
       aspect: [16, 9],
     });
@@ -22,6 +22,7 @@ export const PhotoPicker = ({ onPick }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   wrapper: {

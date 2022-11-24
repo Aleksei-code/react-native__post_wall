@@ -2,20 +2,22 @@ import React, { useEffect } from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { PostList } from "../components/PostList";
-import { CreateScreen } from "./CreateScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { initialState } from "../store/mainSlice";
 import { View, Text, StyleSheet } from "react-native";
+import { loadPosts } from "../store/actions/post";
+import { ActivityIndicator } from "react-native-paper";
+import { THEME } from "../theme";
 
 export const MainScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initialState());
-  }, []);
+    dispatch(loadPosts());
+  }, [dispatch]);
 
-  let DATA = useSelector((state) => state.main.data); //receive
-  console.log(DATA);
+  const DATA = useSelector((state) => state.post.allPosts);
+  const loading = useSelector((state) => state.post.loading);
+
   const openPostHandler = (post) => {
     navigation.push("PostScreen", {
       postId: post.id,
@@ -24,7 +26,7 @@ export const MainScreen = ({ navigation }) => {
   };
   useEffect(() => {
     navigation.setOptions({
-      title: "The Main Page",
+      title: "My blog page",
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
           <Item
@@ -45,7 +47,13 @@ export const MainScreen = ({ navigation }) => {
       ),
     });
   }, []);
-
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator color={THEME.MAIN_COLOR}></ActivityIndicator>
+      </View>
+    );
+  }
   return <PostList data={DATA} onOpen={openPostHandler} />;
 };
 

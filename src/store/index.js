@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import mainSlice from "./mainSlice";
+import { combineReducers, applyMiddleware } from "redux";
+import { legacy_createStore as createStore } from "redux";
+import thunk from "redux-thunk";
+import { postReducer } from "./reducers/post";
 
-const store = configureStore({
-  reducer: {
-    main: mainSlice,
-  },
+const rootReducer = combineReducers({
+  post: postReducer,
 });
 
-export default store;
+export default createStore(rootReducer, applyMiddleware(thunk));
